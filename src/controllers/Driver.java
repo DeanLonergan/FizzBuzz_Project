@@ -30,7 +30,7 @@ public class Driver {
         System.out.println(" (1) Classic FizzBuzz");
         System.out.println(" (2) Create your own (not working)");
         System.out.println("-------------------------------------------------------");
-        System.out.println(" (9) Help");
+        System.out.println(" (9) About");
         System.out.println(" (0) Exit");
         System.out.println("-------------------------------------------------------");
         return ScannerInput.validNextInt("INPUT ==>>: ");
@@ -114,41 +114,40 @@ public class Driver {
             char input = ScannerInput.validNextChar("\nWould you like to save your custom FizzBuzz? (Y/N): ");
             if (Utilities.validYesInput(input)) {
                 System.out.println("\nYour custom FizzBuzz has been saved.");
-                ScannerInput.validNextLine("Press any key to continue...");
             }
         }
-        runMainMenu();
     }
 
     private void printHelp() {
         System.out.println("\n-------------------------------------------------------");
         System.out.println("----------------- What is \"FizzBuzz\"? -----------------");
         System.out.println("-------------------------------------------------------");
-        System.out.println("FizzBuzz is a programming task used in job interviews.");
         System.out.println("""
-                            A candidate is asked to write a program that prints\s
-                            every number from 1 to 100. For each number that is a
-                            multiple of 3, the program should replace the number
-                            with the word “Fizz”, and for each number that is a
-                            multiple of 5 it should replace with the word "buzz".""");
-        System.out.println("-------------------------------------------------------");
-        System.out.println("""
-                            This program was inspired by this task. Many of the\s
-                            follow-up questions require the interviewee to replace
-                            the words “Fizz” or “Buzz” with alternatives, change
-                            the multiples which they replace, or add entirely new
-                            words of new multiples. They may be asked to do any
-                            number of things to what would otherwise seem to be
-                            a rather simple and straightforward program.""");
-        System.out.println("-------------------------------------------------------");
-        System.out.println("""
-                            The goal of this program is serve as the ultimate\s
-                            answer to all of these follow up questions. Instead of
-                            updating or refactoring the code the satisfy any follow
-                            up questions, this program offers a straight-forward
-                            user interface which allows the user to modify the
-                            simple game of "FizzBuzz" in any way they see fit,
+                            FizzBuzz is a programming challenge sometimes used in\s
+                            job interviews. The candidate is required to write a
+                            program that prints every number from 1 to 100. For
+                            each number that is a multiple of 3, the program
+                            should replace the number with the word Fizz; for each
+                            number that is a multiple of 5, replace it with the
+                            word buzz.
+                            
+                            The difficulty of this programming challenge comes in
+                            the follow-up questions. A candidate may be required
+                            to replace or even add two or three additional words
+                            or change which numbers get replaced. If their attempt
+                            is not efficient, their code could get very messy very
+                            quickly. The purpose of the challenge is to test the
+                            candidate's foresight and the general adaptability of
+                            their code.
+                            
+                            The goal of this program is to serve as the ultimate
+                            answer to all of these follow-up questions. Instead
+                            of updating or refactoring the code to satisfy any
+                            follow-up questions, this program offers a straight-
+                            forward user interface that allows the user to modify
+                            the simple game of FizzBuzz in any way they see fit,
                             without ever needing to touch the code.""");
+        System.out.println("-------------------------------------------------------");
     }
 
     public void classicFizzBuzz() {
