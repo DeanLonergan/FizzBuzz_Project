@@ -5,7 +5,7 @@ import java.util.Scanner;
  * Scanner Input class.
  *
  * @author Dean Lonergan
- * @version 0.0.3
+ * @version 0.0.4
  */
 public class ScannerInput {
 
@@ -22,7 +22,7 @@ public class ScannerInput {
                 return Integer.parseInt(input.next());
             }
             catch (NumberFormatException e) {
-                System.err.println("\tEnter a number please.");
+                System.err.println("\tInvalid input - Please enter a number.");
             }
         }  while (true);
     }

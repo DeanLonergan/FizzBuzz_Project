@@ -10,11 +10,11 @@ import java.util.List;
  * ProgramAPI class.
  *
  * @author Dean Lonergan
- * @version 0.0.3
+ * @version 0.0.4
  */
 public class ProgramAPI {
 
-    private int arraySize;
+    private int arraySize = 100;
     private final List<Word> words;
 
     public ProgramAPI() {
@@ -29,11 +29,13 @@ public class ProgramAPI {
         words.add(word);
     }
 
+    public int getSize() {
+        return arraySize;
+    }
+
     public void setSize(int size) {
         if (Utilities.validSize(size)) {
-            arraySize = size + 1;
-        } else {
-            arraySize = -1;
+            arraySize = size;
         }
     }
 
@@ -43,7 +45,7 @@ public class ProgramAPI {
         //Initialize a boolean named addNumber and set it to false.
         boolean addNumber = false;
         //Loop as many times as the user has specified (arraySize has been set by the user).
-        for (int i = 1; i < arraySize; i++) {
+        for (int i = 1; i < arraySize + 1; i++) {
             //Append a line break.
             output.append("\n");
             //Loop through each word added by the user.
