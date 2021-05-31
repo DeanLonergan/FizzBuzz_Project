@@ -5,7 +5,7 @@ import java.util.Scanner;
  * Scanner Input class.
  *
  * @author Dean Lonergan
- * @version 0.0.4
+ * @version 0.0.6
  */
 public class ScannerInput {
 

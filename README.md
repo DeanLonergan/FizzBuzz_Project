@@ -1,4 +1,4 @@
-# FizzBuzz_Project - Current version: 0.0.3
+# FizzBuzz: Ultimate - Current version: 0.0.6
 
 FizzBuzz is a programming challenge sometimes used in job interviews. The candidate is required to write a program that prints every number from 1 to 100. 
 For each number that is a multiple of 3, the program should replace the number with the word Fizz; for each number that is a multiple of 5, replace it with 
