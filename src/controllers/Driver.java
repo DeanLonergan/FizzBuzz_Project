@@ -4,6 +4,8 @@ import models.Word;
 import utils.ScannerInput;
 import utils.Utilities;
 
+import java.util.ArrayList;
+
 /**
  * Driver class.
  *
@@ -53,7 +55,7 @@ public class Driver {
                         runCustomMenu();
                     }
                     catch(Exception e){
-                        System.err.println("Error printing classic FizzBuzz: " + e);
+                        System.err.println("Error entering the custom FizzBuzz menu: " + e);
                     }
                     break;
                 case 9:
@@ -68,6 +70,12 @@ public class Driver {
             ScannerInput.validNextLine("\nPress any key to continue...");
             option = mainMenu();
         }
+        if (!pgmAPI.getWords().isEmpty() || pgmAPI.getFizzBuzzLength() != 100) {
+            char input = ScannerInput.validNextChar("\nWould you like to save your custom FizzBuzz before exiting? (Y/N): ");
+            if (Utilities.validYesInput(input)) {
+                System.out.println("\nYour custom FizzBuzz has been saved!");
+            }
+        }
         System.out.println("Exiting... bye");
     }
 
@@ -75,10 +83,15 @@ public class Driver {
         System.out.println("\n-------------------------------------------------------");
         System.out.println("------------------ Classic FizzBuzz -------------------");
         System.out.println("-------------------------------------------------------");
-        pgmAPI.addWords(new Word("Fizz", 3));
-        pgmAPI.addWords(new Word("Buzz", 5));
-        pgmAPI.setSize(100);
+        ArrayList<Word> previousWords = new ArrayList<>(pgmAPI.getWords());
+        int previousLength = pgmAPI.getFizzBuzzLength();
+        pgmAPI.setFizzBuzzLength(100);
+        pgmAPI.getWords().clear();
+        pgmAPI.addWord(new Word("Fizz", 3));
+        pgmAPI.addWord(new Word("Buzz", 5));
         System.out.println(pgmAPI.fizzBuzz());
+        pgmAPI.setWords(previousWords);
+        pgmAPI.setFizzBuzzLength(previousLength);
     }
 
     private int customMenu() {
@@ -86,9 +99,10 @@ public class Driver {
         System.out.println("------------------- Custom FizzBuzz -------------------");
         System.out.println("-------------------------------------------------------");
         System.out.println(" (1) Run your FizzBuzz");
-        System.out.println(" (2) Add a word");
-        System.out.println(" (3) Remove a word");
-        System.out.println(" (4) Change length (Current: " + pgmAPI.getSize() + ")");
+        System.out.println(" (2) Add word");
+        System.out.println(" (3) Update word (not working)");
+        System.out.println(" (4) Remove word (not working)");
+        System.out.println(" (5) Change length (Current: " + pgmAPI.getFizzBuzzLength() + ")");
         System.out.println("-------------------------------------------------------");
         System.out.println(" (8) Save");
         System.out.println(" (9) Load");
@@ -101,6 +115,14 @@ public class Driver {
         int option = customMenu();
         while (option != 0) {
             switch (option) {
+                case 1:
+                    try{
+                        System.out.println(pgmAPI.fizzBuzz());
+                    }
+                    catch(Exception e){
+                        System.err.println("Error printing custom FizzBuzz: " + e);
+                    }
+                    break;
                 case 2:
                     try{
                         addWord();
@@ -109,7 +131,7 @@ public class Driver {
                         System.err.println("Error adding a word: " + e);
                     }
                     break;
-                case 4:
+                case 5:
                     try{
                         fizzBuzzSize();
                     }
@@ -129,12 +151,6 @@ public class Driver {
             ScannerInput.validNextLine("\nPress any key to continue...");
             option = customMenu();
         }
-        if (!pgmAPI.getWords().isEmpty() || pgmAPI.getSize() != 100) {
-            char input = ScannerInput.validNextChar("\nWould you like to save your custom FizzBuzz? (Y/N): ");
-            if (Utilities.validYesInput(input)) {
-                System.out.println("\nYour custom FizzBuzz has been saved.");
-            }
-        }
     }
 
     public void addWord() {
@@ -143,10 +159,17 @@ public class Driver {
         System.out.println("-------------------------------------------------------");
         String stringInput = ScannerInput.validNextLine("\nEnter the word would you like to add: ");
         int intInput = ScannerInput.validNextInt("Enter the multiple you would like to replace: ");
+        if (intInput == 1) {
+            char userConfirmOne = ScannerInput.validNextChar("Replacing multiples of 1 will replace all numbers, are you sure? (Y/N): ");
+            if (!Utilities.validYesInput(userConfirmOne)) {
+                while (intInput == 1)
+                intInput = ScannerInput.validNextInt("\nPlease enter a different multiple to replace: ");
+            }
+        }
         for (Word word : pgmAPI.getWords()) {
             if (word.getWord().equalsIgnoreCase(stringInput)) {
-                char confirmTest1 = ScannerInput.validNextChar("\nThe word " + "\"" +  stringInput + "\"" + " is already in the FizzBuzz, would you like to add it anyway? (Y/N): ");
-                if (!Utilities.validYesInput(confirmTest1)) {
+                char userConfirmDuplicate = ScannerInput.validNextChar("\nThe word " + "\"" +  stringInput + "\"" + " is already in the FizzBuzz, would you like to add it anyway? (Y/N): ");
+                if (!Utilities.validYesInput(userConfirmDuplicate)) {
                     return;
                 }
             }
@@ -157,9 +180,9 @@ public class Driver {
                 }
             }
         }
-        char confirmTest2 = ScannerInput.validNextChar("\nWould you like the word " + "\"" +  stringInput + "\"" + " to replace all multiples of " + intInput +"? (Y/N): ");
-        if (Utilities.validYesInput(confirmTest2)) {
-            pgmAPI.addWords(new Word(stringInput, intInput));
+        char userConfirmReplace = ScannerInput.validNextChar("\nWould you like the word " + "\"" +  stringInput + "\"" + " to replace all multiples of " + intInput +"? (Y/N): ");
+        if (Utilities.validYesInput(userConfirmReplace)) {
+            pgmAPI.addWord(new Word(stringInput, intInput));
             System.out.println("\n" + "\"" + stringInput + "\"" + " will now replace all multiples of " + intInput + " in your FizzBuzz.");
         }
     }
@@ -168,11 +191,12 @@ public class Driver {
         System.out.println("\n-------------------------------------------------------");
         System.out.println("------------------- Custom FizzBuzz -------------------");
         System.out.println("-------------------------------------------------------");
-        int inputSize = ScannerInput.validNextInt("\nHow large you like your FizzBuzz to be? (1-1000): ");
+        int inputSize = ScannerInput.validNextInt("\nWhat length would you like your FizzBuzz to be? (1-1000): ");
         while (!Utilities.validSize(inputSize)) {
-            inputSize = ScannerInput.validNextInt("\nThe number you entered is outside of the accepted range (1-1000), please enter a valid number: ");
+            inputSize = ScannerInput.validNextInt("\nThe length you entered is outside of the accepted range (1-1000), please enter a valid length: ");
         }
-        pgmAPI.setSize(inputSize);
+        pgmAPI.setFizzBuzzLength(inputSize);
+        System.out.println("\nThe length has been set to " + inputSize);
     }
 
     private void printHelp() {
