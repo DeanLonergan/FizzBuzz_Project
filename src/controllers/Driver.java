@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Driver class.
  *
  * @author Dean Lonergan
- * @version 0.0.6
+ * @version 0.0.8
  */
 public class Driver {
 
@@ -60,10 +60,10 @@ public class Driver {
                     break;
                 case 9:
                     try{
-                        printHelp();
+                        printAbout();
                     }
                     catch(Exception e){
-                        System.err.println("Error printing help: " + e);
+                        System.err.println("Error printing about: " + e);
                     }
                     break;
             }
@@ -73,6 +73,12 @@ public class Driver {
         if (!pgmAPI.getWords().isEmpty() || pgmAPI.getFizzBuzzLength() != 100) {
             char input = ScannerInput.validNextChar("\nWould you like to save your custom FizzBuzz before exiting? (Y/N): ");
             if (Utilities.validYesInput(input)) {
+                try{
+                    pgmAPI.save();
+                }
+                catch(Exception e){
+                    System.err.println("Error saving your fizzbuzz: " + e);
+                }
                 System.out.println("\nYour custom FizzBuzz has been saved!");
             }
         }
@@ -99,10 +105,8 @@ public class Driver {
         System.out.println("------------------- Custom FizzBuzz -------------------");
         System.out.println("-------------------------------------------------------");
         System.out.println(" (1) Run your FizzBuzz");
-        System.out.println(" (2) Add a word [Current: " + pgmAPI.getWords().size() + " word(s)]");
-        System.out.println(" (3) Update a word");
-        System.out.println(" (4) Remove a word");
-        System.out.println(" (5) Change length [Current: " + pgmAPI.getFizzBuzzLength() + "]");
+        System.out.println(" (2) Words [Current: " + pgmAPI.getWords().size() + " word(s)]");
+        System.out.println(" (3) Length [Current: " + pgmAPI.getFizzBuzzLength() + "]");
         System.out.println("-------------------------------------------------------");
         System.out.println(" (8) Save");
         System.out.println(" (9) Load");
@@ -117,6 +121,9 @@ public class Driver {
             switch (option) {
                 case 1:
                     try{
+                        System.out.println("\n-------------------------------------------------------");
+                        System.out.println("------------------- Custom FizzBuzz -------------------");
+                        System.out.println("-------------------------------------------------------");
                         System.out.println(pgmAPI.fizzBuzz());
                     }
                     catch(Exception e){
@@ -125,7 +132,7 @@ public class Driver {
                     break;
                 case 2:
                     try{
-                        addWord();
+                        runWordMenu();
                     }
                     catch(Exception e){
                         System.err.println("Error adding a word: " + e);
@@ -133,34 +140,27 @@ public class Driver {
                     break;
                 case 3:
                     try{
-                        updateWord();
-                    }
-                    catch(Exception e){
-                        System.err.println("Error updating a word: " + e);
-                    }
-                    break;
-                case 4:
-                    try{
-                        removeWord();
-                    }
-                    catch(Exception e){
-                        System.err.println("Error removing a word: " + e);
-                    }
-                    break;
-                case 5:
-                    try{
                         changeLength();
                     }
                     catch(Exception e){
-                        System.err.println("Error adding a word: " + e);
+                        System.err.println("Error changing length: " + e);
                     }
+                    break;
+                case 8:
+                    try{
+                        pgmAPI.save();
+                    }
+                    catch(Exception e){
+                        System.err.println("Error saving your fizzbuzz: " + e);
+                    }
+                    System.out.println("\nYour custom FizzBuzz has been saved!");
                     break;
                 case 9:
                     try{
-                        printHelp();
+                        pgmAPI.load();
                     }
                     catch(Exception e){
-                        System.err.println("Error printing help: " + e);
+                        System.err.println("Error loading custom fizzbuzz: " + e);
                     }
                     break;
             }
@@ -169,11 +169,63 @@ public class Driver {
         }
     }
 
+    public int wordMenu() {
+        System.out.println("\n-------------------------------------------------------");
+        System.out.println("------------------------ Words ------------------------");
+        System.out.println("-------------------------------------------------------");
+        System.out.println(pgmAPI.listWords());
+        System.out.println("-------------------------------------------------------");
+        System.out.println(" (1) Add word");
+        System.out.println(" (2) Update word");
+        System.out.println(" (3) Remove word");
+        System.out.println("-------------------------------------------------------");
+        System.out.println(" (0) Menu");
+        System.out.println("-------------------------------------------------------");
+        return ScannerInput.validNextInt("INPUT ==>>: ");
+    }
+
+    private void runWordMenu() {
+        int option = wordMenu();
+        while (option != 0) {
+            switch (option) {
+                case 1:
+                    try{
+                        addWord();
+                    }
+                    catch(Exception e){
+                        System.err.println("Error adding a word: " + e);
+                    }
+                    break;
+                case 2:
+                    try{
+                        updateWord();
+                    }
+                    catch(Exception e){
+                        System.err.println("Error adding a word: " + e);
+                    }
+                    break;
+                case 3:
+                    try{
+                        removeWord();
+                    }
+                    catch(Exception e){
+                        System.err.println("Error printing About: " + e);
+                    }
+                    break;
+            }
+            ScannerInput.validNextLine("\nPress any key to continue...");
+            option = wordMenu();
+        }
+    }
+
     public void addWord() {
         System.out.println("\n-------------------------------------------------------");
         System.out.println("----------------------- Add Word ----------------------");
         System.out.println("-------------------------------------------------------");
-        String stringInput = ScannerInput.validNextLine("\nEnter the word would you like to add: ");
+        String stringInput = "";
+        while (stringInput.isEmpty()) {
+            stringInput = ScannerInput.validNextLine("\nEnter the word would you like to add: ");
+        }
         int intInput = ScannerInput.validNextInt("Enter the multiple you would like " + "\"" +  stringInput + "\"" + " to replace: ");
         if (intInput == 1) {
             char userConfirmOne = ScannerInput.validNextChar("\nReplacing multiples of 1 will replace all numbers, are you sure? (Y/N): ");
@@ -209,7 +261,7 @@ public class Driver {
         System.out.println("-------------------------------------------------------");
         System.out.println(pgmAPI.listWords());
         if (!pgmAPI.getWords().isEmpty()) {
-            int index = ScannerInput.validNextInt("Enter the index of the word you would like to update: ");
+            int index = ScannerInput.validNextInt("Enter the index of the word you would like to update: ") - 1;
             if (Utilities.validIndex(index, pgmAPI.getWords())) {
                 System.out.println("\n-------------------------------------------------------");
                 System.out.println("--------------------- Update Word ---------------------");
@@ -277,7 +329,7 @@ public class Driver {
         System.out.println("-------------------------------------------------------");
         System.out.println(pgmAPI.listWords());
         if (!pgmAPI.getWords().isEmpty()) {
-            int index = ScannerInput.validNextInt("Enter the index of the word you would like to remove: ");
+            int index = ScannerInput.validNextInt("Enter the index of the word you would like to remove: ") - 1;
             if (Utilities.validIndex(index, pgmAPI.getWords())) {
                 char userConfirmDuplicate = ScannerInput.validNextChar("\nAre you sure you would like to remove the word " + "\"" + pgmAPI.getWords().get(index).getWord() + "\"" + "? (Y/N): ");
                 if (Utilities.validYesInput(userConfirmDuplicate)) {
@@ -301,7 +353,7 @@ public class Driver {
         System.out.println("\nThe length has been set to " + inputSize);
     }
 
-    private void printHelp() {
+    private void printAbout() {
         System.out.println("\n-------------------------------------------------------");
         System.out.println("----------------- What is \"FizzBuzz\"? -----------------");
         System.out.println("-------------------------------------------------------");

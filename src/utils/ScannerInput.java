@@ -5,14 +5,14 @@ import java.util.Scanner;
  * Scanner Input class.
  *
  * @author Dean Lonergan
- * @version 0.0.6
+ * @version 0.0.8
  */
 public class ScannerInput {
 
     /**
      * Method to take in valid user input in the form of a integer.
-     * @param prompt a relevant text prompt displayed to the user, requesting an int input.
-     * @return the users valid input
+     * @param prompt a relevant text prompt is displayed to the user, requesting an int input.
+     * @return the users valid input.
      */
     public static int validNextInt(String prompt) {
         Scanner input = new Scanner(System.in);
@@ -29,8 +29,8 @@ public class ScannerInput {
 
     /**
      * Method to take in valid user input in the form of a String.
-     * @param prompt a relevant text prompt displayed to the user, requesting a String input.
-     * @return the users valid input
+     * @param prompt a relevant text prompt is displayed to the user, requesting a String input.
+     * @return the users valid input.
      */
     public static String validNextLine(String prompt) {
         Scanner input = new Scanner(System.in);
@@ -41,8 +41,8 @@ public class ScannerInput {
 
     /**
      * Method to take in valid user input in the form of the first character of a String.
-     * @param prompt a relevant text prompt displayed to the user, requesting a String.
-     * @return the users valid input
+     * @param prompt a relevant text prompt is displayed to the user, requesting a String.
+     * @return the users valid input.
      */
     public static char validNextChar(String prompt) {
         Scanner input = new Scanner(System.in);
