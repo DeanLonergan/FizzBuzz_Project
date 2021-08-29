@@ -6,7 +6,7 @@ import java.util.List;
  * Utilities class.
  *
  * @author Dean Lonergan
- * @version 0.0.3
+ * @version 0.0.8
  */
 public class Utilities {
 
@@ -17,18 +17,6 @@ public class Utilities {
      */
     public static boolean max15Chars(String string) {
         return string.length() <= 15;
-    }
-
-
-    /**
-     * Method to test if a range of ints are valid.
-     * @param x int.
-     * @param y int.
-     * @param z int.
-     * @return true if the range x,y contains z, false otherwise.
-     */
-    public static boolean validIntRange(int x, int y, int z) {
-        return (x < y) && (x <= z) && (z <= y);
     }
 
     /**
