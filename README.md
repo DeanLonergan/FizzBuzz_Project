@@ -1,5 +1,5 @@
 # FizzBuzz: Ultimate
-# Current version: 0.0.8 (working in IntelliJ and VCS)
+![Capture](https://user-images.githubusercontent.com/74914758/169646190-2195a33a-0550-49bd-b503-b4a1ed391696.PNG)
 
 FizzBuzz is a programming challenge sometimes used in job interviews. 
 The candidate is required to write a program that prints every number 
