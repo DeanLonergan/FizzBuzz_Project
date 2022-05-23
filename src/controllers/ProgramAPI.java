@@ -69,26 +69,26 @@ public class ProgramAPI {
     public String fizzBuzz() {
         StringBuilder output = new StringBuilder();
         boolean addNumber = true;
-        for (int i = 1; i < fizzBuzzLength + 1; i++) {   //Loop as many times as the user has specified.
+        for (int i = 1; i < fizzBuzzLength + 1; i++) {                                              //Loop as many times as the user has specified.
             output.append("\n");
-            for (int word = 0; word < words.size(); word++) {   //Loop through each word.
-                if (i % words.get(word).getNumber() == 0) {   //If the current number of i is a multiple that should be replaced.
-                    output.append(words.get(word).getWord()).append(" ");   //Add the word in place of the number.
-                    addNumber = false;   //Set addNumber to false.
-                    if (words.size() > 1) {   //If more than one word should replace a number.
-                        for (int otherWord = 1; otherWord < words.size(); otherWord++) {   //Loop through each of the remaining words.
+            for (int word = 0; word < words.size(); word++) {                                       //Loop through each word.
+                if (i % words.get(word).getNumber() == 0) {                                         //If the current number of i is a multiple that should be replaced.
+                    output.append(words.get(word).getWord()).append(" ");                           //Add the word in place of the number.
+                    addNumber = false;                                                              //Set addNumber to false.
+                    if (words.size() > 1) {                                                         //If more than one word should replace a number.
+                        for (int otherWord = 1; otherWord < words.size(); otherWord++) {            //Loop through each of the remaining words.
                             if ((i % words.get(otherWord).getNumber() == 0) && (words.get(word).getNumber() != words.get(otherWord).getNumber())) {   //If another word is also a multiple of the number (and not a duplicate).
-                                output.append(words.get(otherWord).getWord()).append(" ");   //Append it.
+                                output.append(words.get(otherWord).getWord()).append(" ");          //Append it.
                             }
                         }
                     }
                     break;
-                } else {   //Otherwise set add number to true.
+                } else {                                                                            //Otherwise set add number to true.
                     addNumber = true;
                 }
             }
-            if (addNumber) {   //When add number is true.
-                output.append(i);   //Append the number.
+            if (addNumber) {                                                                        //When add number is true.
+                output.append(i);                                                                   //Append the number.
             }
         }
         return output.toString();

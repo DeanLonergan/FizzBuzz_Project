@@ -230,8 +230,7 @@ public class Driver {
         if (intInput == 1) {
             char userConfirmOne = ScannerInput.validNextChar("\nReplacing multiples of 1 will replace all numbers, are you sure? (Y/N): ");
             if (!Utilities.validYesInput(userConfirmOne)) {
-                while (intInput == 1)
-                intInput = ScannerInput.validNextInt("\nPlease enter a different multiple to replace: ");
+                while (intInput == 1) intInput = ScannerInput.validNextInt("\nPlease enter a different multiple to replace: ");
             }
         }
         for (Word word : pgmAPI.getWords()) {
