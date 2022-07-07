@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class ScannerInput {
 
     /**
-     * Method to take in valid user input in the form of a integer.
+     * Method to take in valid user input in the form of an integer.
      * @param prompt a relevant text prompt is displayed to the user, requesting an int input.
      * @return the users valid input.
      */

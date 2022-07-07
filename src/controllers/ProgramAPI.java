@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Word;
+import utils.ScannerInput;
 import utils.Utilities;
 
 import java.util.ArrayList;
@@ -92,6 +93,184 @@ public class ProgramAPI {
             }
         }
         return output.toString();
+    }
+
+    public void classicFizzBuzz() {
+        System.out.println("\n-------------------------------------------------------");
+        System.out.println("------------------ Classic FizzBuzz -------------------");
+        System.out.println("-------------------------------------------------------");
+        ArrayList<Word> previousWords = new ArrayList<>(getWords());
+        int previousLength = getFizzBuzzLength();
+        setFizzBuzzLength(100);
+        getWords().clear();
+        addWord(new Word("Fizz", 3));
+        addWord(new Word("Buzz", 5));
+        System.out.println(fizzBuzz());
+        setWords(previousWords);
+        setFizzBuzzLength(previousLength);
+    }
+
+    public int customMenu() {
+        System.out.println("\n-------------------------------------------------------");
+        System.out.println("------------------- Custom FizzBuzz -------------------");
+        System.out.println("-------------------------------------------------------");
+        System.out.println(" (1) Run your FizzBuzz");
+        System.out.println(" (2) Words [Current: " + getWords().size() + " word(s)]");
+        System.out.println(" (3) Length [Current: " + getFizzBuzzLength() + "]");
+        System.out.println("-------------------------------------------------------");
+        System.out.println(" (8) Save");
+        System.out.println(" (9) Load");
+        System.out.println(" (0) Main menu");
+        System.out.println("-------------------------------------------------------");
+        return ScannerInput.validNextInt("INPUT ==>>: ");
+    }
+
+    public int wordMenu() {
+        System.out.println("\n-------------------------------------------------------");
+        System.out.println("------------------------ Words ------------------------");
+        System.out.println("-------------------------------------------------------");
+        System.out.println(listWords());
+        System.out.println("-------------------------------------------------------");
+        System.out.println(" (1) Add word");
+        System.out.println(" (2) Update word");
+        System.out.println(" (3) Remove word");
+        System.out.println("-------------------------------------------------------");
+        System.out.println(" (0) Menu");
+        System.out.println("-------------------------------------------------------");
+        return ScannerInput.validNextInt("INPUT ==>>: ");
+    }
+
+    public void addWord() {
+        System.out.println("\n-------------------------------------------------------");
+        System.out.println("----------------------- Add Word ----------------------");
+        System.out.println("-------------------------------------------------------");
+        String stringInput = "";
+        while (stringInput.isEmpty()) {
+            stringInput = ScannerInput.validNextLine("\nEnter the word would you like to add: ");
+        }
+        int intInput = ScannerInput.validNextInt("Enter the multiple you would like " + "\"" +  stringInput + "\"" + " to replace: ");
+        if (intInput == 1) {
+            char userConfirmOne = ScannerInput.validNextChar("\nReplacing multiples of 1 will replace all numbers, are you sure? (Y/N): ");
+            if (!Utilities.validYesInput(userConfirmOne)) {
+                while (intInput == 1) intInput = ScannerInput.validNextInt("\nPlease enter a different multiple to replace: ");
+            }
+        }
+        for (Word word : getWords()) {
+            if (word.getWord().equalsIgnoreCase(stringInput)) {
+                char userConfirmDuplicate = ScannerInput.validNextChar("\nThe word " + "\"" +  stringInput + "\"" + " is already in the FizzBuzz, would you like to add it anyway? (Y/N): ");
+                if (!Utilities.validYesInput(userConfirmDuplicate)) {
+                    return;
+                }
+            }
+            if (word.getNumber() == intInput) {
+                int previousInput = intInput;
+                while (previousInput == intInput) {
+                    intInput = ScannerInput.validNextInt("\nThe number " + intInput + " has already been selected, please enter a different multiple to replace: ");
+                }
+            }
+        }
+        char userConfirmReplace = ScannerInput.validNextChar("\nWould you like the word " + "\"" +  stringInput + "\"" + " to replace all multiples of " + intInput +"? (Y/N): ");
+        if (Utilities.validYesInput(userConfirmReplace)) {
+            addWord(new Word(stringInput, intInput));
+            System.out.println("\n" + "\"" + stringInput + "\"" + " will now replace all multiples of " + intInput + " in your FizzBuzz.");
+        }
+    }
+
+    public void updateWord() {
+        System.out.println("\n-------------------------------------------------------");
+        System.out.println("--------------------- Update Word ---------------------");
+        System.out.println("-------------------------------------------------------");
+        System.out.println(listWords());
+        if (!getWords().isEmpty()) {
+            int index = ScannerInput.validNextInt("Enter the index of the word you would like to update: ") - 1;
+            if (Utilities.validIndex(index, getWords())) {
+                System.out.println("\n-------------------------------------------------------");
+                System.out.println("--------------------- Update Word ---------------------");
+                System.out.println("-------------------------------------------------------");
+                System.out.println(" (1) Update the word: " + "\"" + getWords().get(index).getWord() + "\"");
+                System.out.println(" (2) Update the multiple: " + getWords().get(index).getNumber());
+                System.out.println("-------------------------------------------------------");
+                System.out.println(" (0) Return ");
+                System.out.println("-------------------------------------------------------");
+                int option = ScannerInput.validNextInt("INPUT ==>>: ");
+                while (option != 0) {
+                    switch (option) {
+                        case 1 -> {
+                            String stringInput = ScannerInput.validNextLine("\nEnter the updated word: ");
+                            for (Word word : getWords()) {
+                                if (word.getWord().equalsIgnoreCase(stringInput)) {
+                                    char userConfirmDuplicate = ScannerInput.validNextChar("\nThe word " + "\"" +  stringInput + "\"" + " is already in the FizzBuzz, would you like to add it anyway? (Y/N): ");
+                                    if (!Utilities.validYesInput(userConfirmDuplicate)) {
+                                        return;
+                                    }
+                                }
+                            }
+                            getWords().get(index).setWord(stringInput);
+                            System.out.println("\n" + "\"" + stringInput + "\"" + " will now replace all multiples of " + getWords().get(index).getNumber() + " in your FizzBuzz.");
+                            return;
+                        }
+                        case 2 -> {
+                            int intInput = ScannerInput.validNextInt("\nEnter the updated multiple: ");
+                            outer: for (Word word : getWords()) {
+                                while (intInput == getWords().get(index).getNumber() || intInput == 1 || intInput == word.getNumber()) {
+                                    if (intInput == getWords().get(index).getNumber()) {
+                                        char userConfirmOne = ScannerInput.validNextChar("\nMultiples of " + intInput + " are already replaced by " + "\"" + getWords().get(index).getWord() + "\"" + ", would you like to change this number? (Y/N): ");
+                                        if (!Utilities.validYesInput(userConfirmOne)) {
+                                            break outer;
+                                        }
+                                        intInput = ScannerInput.validNextInt("\nPlease enter a different number: ");
+                                    }
+                                    if (intInput == 1) {
+                                        char userConfirmOne = ScannerInput.validNextChar("\nReplacing multiples of 1 will replace all numbers, are you sure? (Y/N): ");
+                                        if (Utilities.validYesInput(userConfirmOne)) {
+                                            break outer;
+                                        }
+                                        intInput = ScannerInput.validNextInt("\nPlease enter a different number: ");
+                                    }
+                                    if (intInput == word.getNumber()) {
+                                        intInput = ScannerInput.validNextInt("\nMultiples of " + intInput + " are already replaced by " + "\"" + word.getWord() + "\"" + ", please enter a different number: ");
+                                    }
+                                }
+                            }
+                            getWords().get(index).setNumber(intInput);
+                            System.out.println("\n" + "\"" + getWords().get(index).getWord() + "\"" + " will now replace all multiples of " + intInput + " in your FizzBuzz.");
+                            return;
+                        }
+                    }
+                    ScannerInput.validNextLine("\nPress any key to continue...");
+                    option = customMenu();
+                }
+            }
+        }
+    }
+
+    public void removeWord() {
+        System.out.println("\n-------------------------------------------------------");
+        System.out.println("--------------------- Remove Word ---------------------");
+        System.out.println("-------------------------------------------------------");
+        System.out.println(listWords());
+        if (!getWords().isEmpty()) {
+            int index = ScannerInput.validNextInt("Enter the index of the word you would like to remove: ") - 1;
+            if (Utilities.validIndex(index, getWords())) {
+                char userConfirmDuplicate = ScannerInput.validNextChar("\nAre you sure you would like to remove the word " + "\"" + getWords().get(index).getWord() + "\"" + "? (Y/N): ");
+                if (Utilities.validYesInput(userConfirmDuplicate)) {
+                    System.out.println("\n" + "\"" + getWords().get(index).getWord() + "\"" + " has been removed.");
+                    getWords().remove(index);
+                }
+            }
+        }
+    }
+
+    public void changeLength() {
+        System.out.println("\n-------------------------------------------------------");
+        System.out.println("-------------------- Change Length --------------------");
+        System.out.println("-------------------------------------------------------");
+        int inputSize = ScannerInput.validNextInt("\nWhat length would you like your FizzBuzz to be? (1-1000): ");
+        while (!Utilities.validSize(inputSize)) {
+            inputSize = ScannerInput.validNextInt("\nThe length you entered is outside of the accepted range (1-1000), please enter a valid length: ");
+        }
+        setFizzBuzzLength(inputSize);
+        System.out.println("\nThe length has been set to " + inputSize);
     }
 
     @SuppressWarnings("unchecked")
