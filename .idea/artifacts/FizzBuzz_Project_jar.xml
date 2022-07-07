@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="FizzBuzz Ultimate:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/FizzBuzz_Ultimate_jar</output-path>
+  <artifact type="jar" name="FizzBuzz Project:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FizzBuzz_Project</output-path>
     <root id="archive" name="FizzBuzz_Project.jar">
       <element id="module-output" name="FizzBuzz_Project" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/xstream-1.4.10.jar" path-in-jar="/" />
