@@ -6,7 +6,7 @@ import java.util.List;
  * Utilities class.
  *
  * @author Dean Lonergan
- * @version 0.0.8
+ * @version 0.1.0
  */
 public class Utilities {
 
@@ -22,7 +22,7 @@ public class Utilities {
     /**
      * Method to test if an int input contains only non-negative numbers.
      * @param num int number.
-     * @return true if the number is non negative, false otherwise.
+     * @return true if the number is non-negative, false otherwise.
      */
     public static boolean validIntNonNegative(int num) {
         return num >= 0;
