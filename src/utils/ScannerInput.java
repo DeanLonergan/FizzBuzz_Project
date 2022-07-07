@@ -5,12 +5,12 @@ import java.util.Scanner;
  * Scanner Input class.
  *
  * @author Dean Lonergan
- * @version 0.0.8
+ * @version 0.1.0
  */
 public class ScannerInput {
 
     /**
-     * Method to take in valid user input in the form of a integer.
+     * Method to take in valid user input in the form of an integer.
      * @param prompt a relevant text prompt is displayed to the user, requesting an int input.
      * @return the users valid input.
      */
