@@ -7,7 +7,7 @@ import utils.Utilities;
  * Driver class.
  *
  * @author Dean Lonergan
- * @version 0.0.9
+ * @version 0.1.0
  */
 public class Driver {
 
@@ -64,7 +64,7 @@ public class Driver {
                     }
                     break;
             }
-            ScannerInput.validNextLine("\nPress any key to continue...");
+            ScannerInput.validNextLine("\nPress Enter to continue...");
             option = mainMenu();
         }
         if (!pgmAPI.getWords().isEmpty() || pgmAPI.getFizzBuzzLength() != 100) {
@@ -131,7 +131,7 @@ public class Driver {
                     }
                     break;
             }
-            ScannerInput.validNextLine("\nPress any key to continue...");
+            ScannerInput.validNextLine("\nPress Enter to continue...");
             option = pgmAPI.customMenu();
         }
     }
@@ -165,7 +165,7 @@ public class Driver {
                     }
                     break;
             }
-            ScannerInput.validNextLine("\nPress any key to continue...");
+            ScannerInput.validNextLine("\nPress Enter to continue...");
             option = pgmAPI.wordMenu();
         }
     }

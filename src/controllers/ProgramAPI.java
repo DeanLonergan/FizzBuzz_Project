@@ -19,7 +19,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  * ProgramAPI class.
  *
  * @author Dean Lonergan
- * @version 0.0.9
+ * @version 0.1.0
  */
 public class ProgramAPI {
 
@@ -237,7 +237,7 @@ public class ProgramAPI {
                             return;
                         }
                     }
-                    ScannerInput.validNextLine("\nPress any key to continue...");
+                    ScannerInput.validNextLine("\nPress Enter to continue...");
                     option = customMenu();
                 }
             }

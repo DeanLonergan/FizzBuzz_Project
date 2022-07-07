@@ -6,7 +6,7 @@ import java.util.List;
  * Utilities class.
  *
  * @author Dean Lonergan
- * @version 0.0.9
+ * @version 0.1.0
  */
 public class Utilities {
 
