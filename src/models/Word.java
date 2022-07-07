@@ -6,7 +6,7 @@ import utils.Utilities;
  * Word class.
  *
  * @author Dean Lonergan
- * @version 0.0.8
+ * @version 0.0.9
  */
 public class Word {
 
@@ -14,7 +14,7 @@ public class Word {
     private int number;
 
     /**
-     * The constructor allowing word objects to be created.
+     * Word constructor.
      * @param word the word entered by the user.
      * @param number the multiple that the word will replace.
      */
